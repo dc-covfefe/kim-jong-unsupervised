@@ -1,4 +1,5 @@
 import dash
+import os
 from xlutils import copy
 import flask
 from dash.dependencies import Input, Output
@@ -26,12 +27,20 @@ tab_nos_pagenames = {'tab-0': 'Main', 'tab-1': 'Topic Models', 'tab-2': 'Classif
 
 
 # Read in static dataframes
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+APP_STATIC = os.path.join(APP_ROOT, "static")
+raw_path = os.path.join(APP_STATIC, "dream_data_raw.csv")
+clean_path = os.path.join(APP_STATIC, "cleaned_dreams_dataset.csv")
+#read data
+raw_data = pd.read_csv(raw_path, encoding="latin1")
+cleaned_data = pd.read_csv(clean_path, encoding="latin1")
+
 
 # 1. Raw dreams dataset
-raw_data = pd.read_csv("C:/Users/aacraig/Documents/ContextEdge/data/raw_dreams_dataset.csv", encoding = 'latin1', low_memory = False)
+# raw_data = pd.read_csv("C:/Users/aacraig/Documents/ContextEdge/data/raw_dreams_dataset.csv", encoding = 'latin1', low_memory = False)
 
 # 2. Processed dreams dataset 
-cleaned_data = pd.read_csv("C:/Users/aacraig/Documents/ContextEdge/data/cleaned_dreams_dataset.csv", encoding = 'latin1', low_memory = False)
+# cleaned_data = pd.read_csv("C:/Users/aacraig/Documents/ContextEdge/data/cleaned_dreams_dataset.csv", encoding = 'latin1', low_memory = False)
 
 # Dictionary for storing dataframes with keys/names
 dataframes_dict = {'cleaned_data': cleaned_data,
@@ -568,8 +577,8 @@ style={
 def update_topic_models_dataset(selected_dataset_name):
     
     # Create dictionary from dropdown values to filenames
-    values_filepaths = {'cleaned_dreams_dataset': 'C:/Users/aacraig/Documents/ContextEdge/data/cleaned_dreams_dataset.csv',
-                        'raw_dreams_dataset': 'C:/Users/aacraig/Documents/ContextEdge/data/raw_dreams_dataset.csv'}
+    values_filepaths = {'cleaned_dreams_dataset': clean_path,
+                        'raw_dreams_dataset': raw_path}
     values_filenames = {'cleaned_dreams_dataset': 'cleaned_dreams_dataset.csv',
                         'raw_dreams_dataset': 'raw_dreams_dataset.csv'}
 
@@ -746,27 +755,27 @@ def parse_contents(contents, filename, date):
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
-# CSS Setup
-css_directory = "C:/Users/aacraig/Dash/ContextEdge/app"
-stylesheets = ['stylesheet.css']
-static_css_route = '/static/'
-
-@app.server.route('{}<stylesheet>'.format(static_css_route))
-def serve_stylesheet(stylesheet):
-    if stylesheet not in stylesheets:
-        raise Exception(
-            '"{}" is excluded from the allowed static files'.format(
-                stylesheet
-            )
-        )
-    return flask.send_from_directory(css_directory, stylesheet)
-
-
-for stylesheet in stylesheets:
-    app.css.append_css({"external_url": "/static/{}".format(stylesheet)})
-
-
-
+## CSS Setup
+#css_directory = "C:/Users/aacraig/Dash/ContextEdge/app"
+#stylesheets = ['stylesheet.css']
+#static_css_route = '/static/'
+#
+#@app.server.route('{}<stylesheet>'.format(static_css_route))
+#def serve_stylesheet(stylesheet):
+#    if stylesheet not in stylesheets:
+#        raise Exception(
+#            '"{}" is excluded from the allowed static files'.format(
+#                stylesheet
+#            )
+#        )
+#    return flask.send_from_directory(css_directory, stylesheet)
+#
+#
+#for stylesheet in stylesheets:
+#    app.css.append_css({"external_url": "/static/{}".format(stylesheet)})
+#
+#
+#
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
