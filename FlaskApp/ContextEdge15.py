@@ -3,6 +3,12 @@
 
 #-------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------
+import os 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+APP_STATIC = os.path.join(APP_ROOT, "static")
+raw_path = os.path.join(APP_STATIC, "dream_data_raw.csv")
+clean_path = os.path.join(APP_STATIC, "cleaned_dreams_dataset.csv")
+#read data
 
 def ContextEdgePreprocessor(filename = 'dream_data_raw.csv', 
 								raw_input_file = True, 
@@ -27,16 +33,16 @@ def ContextEdgePreprocessor(filename = 'dream_data_raw.csv',
 	from nltk.corpus import stopwords
 	
 
-	import spacy
+	# import spacy
 	# en_nlp = spacy.load('en_core_web_lg', disable=['parser', 'tagger'])
-	import en_core_web_lg
-	nlp = en_core_web_lg.load()
+	# import en_core_web_lg
+	# nlp = en_core_web_lg.load()
 
 	
 
 	#-------------------------------------------------------------------------------------------
 	# Reading in the raw dream data
-	df_raw = pd.read_csv('C:/Users/aacraig/Documents/ContextEdge/data/' + filename, encoding = 'latin1')
+	df_raw = pd.read_csv(raw_path, encoding = 'latin1')
 	#-------------------------------------------------------------------------------------------
 	
 	#-------------------------------------------------------------------------------------------
