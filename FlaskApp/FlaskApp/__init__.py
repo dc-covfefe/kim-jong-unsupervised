@@ -67,9 +67,13 @@ ngram_values_dict = {1 : (1,1), 2: (1,2), 3: (1,3)}
 # App Front-end
 
 
-app = dash.Dash()
+# app = dash.Dash()
+# server = flask.Flask(__name__)
+# app = dash.Dash(__name__, server=server)
 
 
+server = flask.Flask(__name__)
+app = dash.Dash(server=server)
 # Generating a 'unique' key
 word_bank1 = ['guardian', 'pioneer', 'integrator', 'driver', 'nihilist', 'postnihilist', 'neonihilist']
 word_bank2 = ['cognitive', 'rshiny', 'robotics', 'edge', 'neocognitive', 'postcognitive', 'levelsetting', 'touchpoint']
